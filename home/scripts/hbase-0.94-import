@@ -1,0 +1,25 @@
+import coursier.core.Authentication, coursier.MavenRepository
+
+interp.repositories() ++= Seq(
+  MavenRepository(
+    "https://repository.cloudera.com/content/repositories/releases/",
+    authentication = None),
+  MavenRepository(
+    "http://builds.archive.org/maven2/",
+    authentication = None)
+)
+@
+import $ivy.`org.apache.hbase:hbase:0.94.6-cdh4.4.0`
+import $ivy.`org.apache.hadoop:hadoop-common:2.0.0-cdh4.4.0`
+
+import org.apache.hadoop.hbase.client._
+import org.apache.hadoop.hbase.util.Bytes
+import org.apache.hadoop.hbase.HBaseConfiguration
+import org.apache.hadoop.conf.Configuration
+import scala.collection.JavaConverters._
+
+implicit def stringToByteArray(s: String) = Bytes.toBytes(s)
+implicit class BaStringOps(ba: Array[Byte]) { def asString = Bytes.toString(ba) }
+interp.load.cp(Path("/Users/ben.jeong/.story-spec/opt/hbase/conf"))
+val conf = HBaseConfiguration.create
+
