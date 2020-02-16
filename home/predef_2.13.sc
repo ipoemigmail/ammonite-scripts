@@ -41,20 +41,3 @@ val ammoniteHome = home / ".ammonite"
 
 def loadScript(fileName: String) = repl.load.exec(ammoniteHome / "scripts" / (fileName + ".sc"))
 
-val singleEc = ec.fromExecutorService(java.util.concurrent.Executors.newFixedThreadPool(1))
-
-implicit val cs: ContextShift[IO] = IO.contextShift(ec.global)
-implicit val tm: Timer[IO] = IO.timer(ec.global)
-
-trait ToFutureSeq[F[_]] {
-  def toFuture[A](fa: F[A]): Future[Seq[A]]
-}
-
-implicit class FutureOps[A](val ft: Future[A]) {
-  def get: A = Await.result(ft, Duration.Inf)
-}
-
-implicit class ToFutureSeqOps[F[_]: ToFutureSeq, A](val fa: F[A]) {
-  val F: ToFutureSeq[F] = implicitly
-  def get: Seq[A] = Await.result(F.toFuture(fa), Duration.Inf)
-}
