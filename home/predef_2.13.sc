@@ -29,8 +29,8 @@ import $ivy.`com.github.mpilquist::simulacrum:0.19.0`
 import simulacrum._
 
 import $exec.scripts.`cats-import`
+import $exec.scripts.`zio-import`
 
-import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext => ec}
 import ec.Implicits.global
 import scala.concurrent._
