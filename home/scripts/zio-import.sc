@@ -1,4 +1,4 @@
-import $ivy.`dev.zio::zio:1.0.0-RC18-2`
+import $ivy.`dev.zio::zio:1.0.0`
 
 import zio._
 
